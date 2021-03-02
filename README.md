@@ -7,14 +7,14 @@ A collection of scripts to despeckle images, CNN based despeckling. Despeckling 
 
 Examples: ICEYE:
 Speckled:
-https://github.com/tonzowonzo/SAR_utils/blob/main/examples/iceye/iceye_speckled.PNG?raw=true
+!https://github.com/tonzowonzo/SAR_utils/blob/main/examples/iceye/iceye_speckled.PNG?raw=true
 Filtered:
-https://github.com/tonzowonzo/SAR_utils/blob/main/examples/iceye/iceye_filtered.PNG?raw=true
+!https://github.com/tonzowonzo/SAR_utils/blob/main/examples/iceye/iceye_filtered.PNG?raw=true
 
 Speckled:
-https://github.com/tonzowonzo/SAR_utils/blob/main/examples/iceye/iceye_speckled2.PNG?raw=true
+!https://github.com/tonzowonzo/SAR_utils/blob/main/examples/iceye/iceye_speckled2.PNG?raw=true
 Filtered:
-https://github.com/tonzowonzo/SAR_utils/blob/main/examples/iceye/iceye_filtered2.PNG?raw=true
+!https://github.com/tonzowonzo/SAR_utils/blob/main/examples/iceye/iceye_filtered2.PNG?raw=true
 
 
 ##### Despeckling with this model works better under several circumstances: 
