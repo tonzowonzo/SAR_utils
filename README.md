@@ -7,7 +7,7 @@ A collection of scripts to despeckle images, CNN based despeckling. Despeckling 
 
 Examples: ICEYE:
 
-![alt text](https://github.com/tonzowonzo/SAR_utils/examples/iceye/iceye_speckled.PNG?raw=true)
+![speckled SAR image](SAR_utils/examples/iceye/iceye_speckled.PNG)
 
 ##### Despeckling with this model works better under several circumstances: 
 1. The image hasn't been log scaled.
