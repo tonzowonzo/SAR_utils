@@ -1,72 +1,48 @@
-from keras.layers import Conv2D, AveragePooling2D, Dense, Dropout, BatchNormalization, Input, UpSampling2D, concatenate
-from keras.layers import Lambda, GlobalAveragePooling2D
-import keras.backend as K
-from keras.models import Model
+from tensorflow import image
+import tensorflow as tf
+from keras.models import *
+from keras.layers import *
 
-def logFunc(x):
+img_size = 256
+lambda_value = 0.0002
+
+
+def custom_loss(layer):
+    def total_variation_loss(y_actual, y_predicted):
+        loss = tf.reduce_sum(image.total_variation(y_actual - y_predicted)) * lambda_value
+        mse = tf.reduce_mean((y_actual - y_predicted) ** 2)
+        loss += mse
+        return loss
+    return total_variation_loss
+
+
+def dilation_net(pretrained_weights=None, input_size=(img_size, img_size, 1)):
     """
-    Takes the log of an input and returns it.
-
-    :param x:
+    Architecture from: https://github.com/zhixuhao/unet/blob/master/model.py
+    :param pretrained_weights: Weights to add to the UNet.
+    :param input_size: The size of the input image.
     :return:
     """
-    return K.log(x)
+    inputs = Input(input_size)
+    conv1 = Conv2D(64, 3, dilation_rate=1, activation="relu", padding="same")(inputs)
+    conv2 = Conv2D(64, 3, dilation_rate=2, activation="relu", padding="same")(conv1)
+    conv3 = Conv2D(64, 3, dilation_rate=3, activation="relu", padding="same")(conv2)
+    conv4 = Conv2D(64, 3, dilation_rate=4, activation="relu", padding="same")(conv3)
+    conv5 = Conv2D(64, 3, dilation_rate=3, activation="relu", padding="same")(conv4)
+    conv6 = Conv2D(64, 3, dilation_rate=2, activation="relu", padding="same")(conv5)
+    conv7 = Conv2D(1, 1, dilation_rate=1, padding="same", activation="relu", kernel_initializer="ones")(conv6)
+    # model_loss = Lambda(lambda x: x[0] / x[1])([inputs, conv7])
+    model = Activation(activation="tanh")(conv7)
+    model = Model(inputs=[inputs], outputs=[model])
 
-
-def expFunc(x):
-    """
-    Takes the inverse of a log and returns it.
-
-    :param x:
-    :return:
-    """
-    return K.exp(x)
-
-
-def build_model():
-    input_1 = Input((64, 64, 1))
-    model = Conv2D(64, 3, padding="same", activation="relu")(input_1)
-
-    # Main convolutional block.
-    model = Conv2D(64, 3, padding="same", activation="relu", use_bias=False)(model)
-    model = BatchNormalization()(model)
-    model = Conv2D(64, 3, padding="same", activation="relu", use_bias=False)(model)
-    model = BatchNormalization()(model)
-    model = Conv2D(64, 3, padding="same", activation="relu", use_bias=False)(model)
-    model = BatchNormalization()(model)
-    model = Conv2D(64, 3, padding="same", activation="relu", use_bias=False)(model)
-    model = BatchNormalization()(model)
-    model = Conv2D(64, 3, padding="same", activation="relu", use_bias=False)(model)
-    model = BatchNormalization()(model)
-    model = Conv2D(64, 3, padding="same", activation="relu", use_bias=False)(model)
-    model = BatchNormalization()(model)
-    model = Conv2D(64, 3, padding="same", activation="relu", use_bias=False)(model)
-    model = BatchNormalization()(model)
-    model = Conv2D(64, 3, padding="same", activation="relu", use_bias=False)(model)
-    model = BatchNormalization()(model)
-    model = Conv2D(64, 3, padding="same", activation="relu", use_bias=False)(model)
-    model = BatchNormalization()(model)
-    model = Conv2D(64, 3, padding="same", activation="relu", use_bias=False)(model)
-    model = BatchNormalization()(model)
-    model = Conv2D(64, 3, padding="same", activation="relu", use_bias=False)(model)
-    model = BatchNormalization()(model)
-    model = Conv2D(64, 3, padding="same", activation="relu", use_bias=False)(model)
-    model = BatchNormalization()(model)
-    model = Conv2D(64, 3, padding="same", activation="relu", use_bias=False)(model)
-    model = BatchNormalization()(model)
-    model = Conv2D(64, 3, padding="same", activation="relu", use_bias=False)(model)
-    model = BatchNormalization()(model)
-    model = Conv2D(64, 3, padding="same", activation="relu", use_bias=False)(model)
-    model = BatchNormalization()(model)
-
-    # Output layer.
-    model = Conv2D(1, 3, activation="linear", padding="same")(model)
-    model = Model(inputs=[input_1], outputs=[model])
-    model.compile(optimizer="adam", metrics=["mse", "mae"], loss="mse")
+    model.compile(optimizer="adam", loss="mse", metrics=["mae", "mse"])
+    print(model.summary())
+    if pretrained_weights:
+        model.load_weights(pretrained_weights)
 
     return model
 
 
-model = build_model()
-print(model.summary())
-
+if __name__ == '__main__':
+    model = dilation_net()
+    model.summary()
