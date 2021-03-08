@@ -7,14 +7,12 @@ from model import custom_loss
 
 
 import os
-path = "D:/sar/test3/"
-model_cnn = load_model("C:/Users/tim.iles/noise_model_noise_synthetic_sv_loss.h5",
+path = "/path/to/folder/containing/images/
+model_cnn = load_model("/path/to/h5/model/to/load.h5",
                        custom_objects={"total_variation_loss": custom_loss})
 
-if path.endswith("test3/"):
-    scale_factor = 45
-else:
-    scale_factor = 255
+# Scale factor can be changed, depending on your data. 255 worked well for ICEYE but may not work well for other data. I.e for VH Sentinel 1 this value should probably be lower.
+scale_factor = 255
 img_size = 256
 border_size = 8
 for i in [i for i in os.listdir(path) if i.endswith("tif")]:
