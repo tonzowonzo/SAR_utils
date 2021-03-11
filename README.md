@@ -7,6 +7,8 @@ A collection of scripts to despeckle images, CNN based despeckling. Despeckling 
 
 At some point I will add true implementations of papers that copy their architecture exactly, but for now it's a slightly modified combination of the two.
 
+For now the requirements.txt is wrong, I will fix this as soon as I have a nice environment locally. More models will also be added soon, with the skip connections included for the residual noise calculations.
+
 Examples: ICEYE:
 Speckled:
 <img src="https://github.com/tonzowonzo/SAR_utils/blob/main/examples/iceye/iceye_speckled.PNG?raw=true">
