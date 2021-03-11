@@ -42,6 +42,25 @@ def dilation_net(pretrained_weights=None, input_size=(img_size, img_size, 1)):
 
     return model
 
+def sar_drn(input_size=(256, 256, 1)):
+    input_sar = Input(input_size)
+    conv1 = Conv2D(64, 3, activation="relu", dilation_rate=1, padding="same")(input_sar)
+    conv2 = Conv2D(64, 3, activation="relu", dilation_rate=2, padding="same")(conv1)
+    conv3 = Conv2D(64, 3, activation="relu", dilation_rate=3, padding="same")(conv2)
+    skip_1 = Add()([conv1, conv3])
+    conv4 = Conv2D(64, 3, activation="relu", dilation_rate=4, padding="same")(skip_1)
+    conv5 = Conv2D(64, 3, activation="relu", dilation_rate=3, padding="same")(conv4)
+    conv6 = Conv2D(64, 3, activation="relu", dilation_rate=2, padding="same",
+                   kernel_initializer="he_normal")(conv5)
+    skip_2 = Add()([conv4, conv6])
+    conv7 = Conv2D(1, 3, dilation_rate=1, padding="same")(skip_2)
+    noise_residual = Subtract()([input_sar, conv7])
+    model = Model(inputs=input_sar, outputs=noise_residual)
+    model.compile(optimizer="adam", loss="mse", metrics=['mae', 'mse'])
+    return model
+
+
+
 
 if __name__ == '__main__':
     model = dilation_net()
