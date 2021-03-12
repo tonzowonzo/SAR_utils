@@ -43,6 +43,13 @@ def dilation_net(pretrained_weights=None, input_size=(img_size, img_size, 1)):
     return model
 
 def sar_drn(input_size=(256, 256, 1)):
+    """
+    An implementation of SARDRN by by Zhang et al (https://arxiv.org/abs/1709.02898).
+
+    :param input_size: The image input size, the models in this repo are trained using just
+    one channel, so using more i.e the VV and VH polarisations of Sentinel 1 is untested.
+    :return: A keras model.
+    """
     input_sar = Input(input_size)
     conv1 = Conv2D(64, 3, activation="relu", dilation_rate=1, padding="same")(input_sar)
     conv2 = Conv2D(64, 3, activation="relu", dilation_rate=2, padding="same")(conv1)
