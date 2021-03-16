@@ -8,7 +8,7 @@ A collection of scripts to despeckle images, CNN based despeckling. Despeckling 
 At some point I will add true implementations of papers that copy their architecture exactly, but for now it's a slightly modified combination of the two.
 
 #### Testing examples
-I will add some testing examples for both Sentinel-1, ICEYE and Capella as soon as possible.
+I will add some testing examples for both Sentinel-1, ICEYE and Capella as soon as possible. The Capella data will come from SpaceNet-6 then be divided by 10 and raised to the power of 10 to return it to linear from log. 
 
 #### requirements.txt
 For now the requirements.txt is wrong, I will fix this as soon as I have a nice environment locally. More models will also be added soon, with the skip connections included for the residual noise calculations.
