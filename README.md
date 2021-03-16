@@ -9,6 +9,11 @@ At some point I will add true implementations of papers that copy their architec
 
 For now the requirements.txt is wrong, I will fix this as soon as I have a nice environment locally. More models will also be added soon, with the skip connections included for the residual noise calculations.
 
+The three models so far are:
+1. noise_model_noise_synthetic.h5 - Based on the "dilation_net" function in model.py and trained with mse loss. This is based on a hybrid approach from Zhang et al. and Wang et al.
+2. noise_model_noise_synthetic_sv_loss.h5 - The same as the above but sv is used in conjunction with mse loss.
+3. noise_model_synthetic_mse_loss_sar_drn.h5 - A recreation of the model from the Zhang et al. paper, uses skip connections and calculates the residual noise to despeckle the image. It uses mse as a loss function for training.
+
 Examples: ICEYE:
 Speckled:
 <img src="https://github.com/tonzowonzo/SAR_utils/blob/main/examples/iceye/iceye_speckled.PNG?raw=true">
