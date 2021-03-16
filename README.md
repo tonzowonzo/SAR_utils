@@ -22,6 +22,8 @@ For now the requirements.txt is wrong, I will fix this as soon as I have a nice 
 2. noise_model_noise_synthetic_sv_loss.h5 - The same as the above but sv is used in conjunction with mse loss.
 3. noise_model_synthetic_mse_loss_sar_drn.h5 - A recreation of the model from the Zhang et al. paper, uses skip connections and calculates the residual noise to despeckle the image. It uses mse as a loss function for training.
 
+Best model so far: In my opinion the noise_model_noise_synthetic.h5 performs the best across Sentinel 1, Capella and ICEYE data.
+
 #### Future implementations:
 1. https://www.mdpi.com/2072-4292/11/13/1532/htm - A U-Net based residual network quite different to the implementations above by Latarri et al.
 
