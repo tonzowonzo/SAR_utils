@@ -14,6 +14,11 @@ The three models so far are:
 2. noise_model_noise_synthetic_sv_loss.h5 - The same as the above but sv is used in conjunction with mse loss.
 3. noise_model_synthetic_mse_loss_sar_drn.h5 - A recreation of the model from the Zhang et al. paper, uses skip connections and calculates the residual noise to despeckle the image. It uses mse as a loss function for training.
 
+Future implementations:
+1. https://www.mdpi.com/2072-4292/11/13/1532/htm - A U-Net based residual network quite different to the implementations above by Latarri et al.
+
+Artificial speckle: The functions to create the artificial noise will be adapted to NumPy code at some point and added to this repo. Right now they aren't here but I will release them soon. With the artificial speckle function users will be able to add their own noise to aerial/satellite imagery to train for any resolution. Right now these denoisers work best with high res sar, but feasibly they would work better on lower res such as Sentinel 1 if trained on Sentinel 2 images with artificial speckle added. 
+
 Examples: ICEYE:
 Speckled:
 <img src="https://github.com/tonzowonzo/SAR_utils/blob/main/examples/iceye/iceye_speckled.PNG?raw=true">
